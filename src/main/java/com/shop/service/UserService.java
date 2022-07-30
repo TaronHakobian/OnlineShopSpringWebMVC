@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    public void userAuthentication(User user) {}
+    public void userAuthentication(User user) {
+        System.out.println();
+    }
 
 }

@@ -5,6 +5,7 @@
   Time: 10:35
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="com.shop.database.DB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -53,7 +54,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: ${sessionScope.user.getTheme()}">
 <form method="get" action="/searchByUsername">
     <label>
         SearchByUsername <input type="text" name="searchByUsername"/><br>
@@ -62,14 +63,14 @@
 </form>
 <c:choose>
     <c:when test="${user != null}">
-        <a href="${pageContext.request.contextPath}/user" class="user-name">${user.userName}</a>
+        <a href="${pageContext.request.contextPath}/userprofile" class="user-name">${user.username}</a>
     </c:when>
     <c:otherwise>
         <a href="${pageContext.request.contextPath}/login" class="log-in">Log in</a>
         <a href="${pageContext.request.contextPath}/signup" class="sign-up">Sign up</a>
     </c:otherwise>
 </c:choose>
-<c:forEach var="post" items="${posts}">
+<c:forEach var="post" items="${DB.posts}">
     <div class="post">
         <img alt="image" src="${post.imageUrl}"/>
         <h3>${post.title}</h3>

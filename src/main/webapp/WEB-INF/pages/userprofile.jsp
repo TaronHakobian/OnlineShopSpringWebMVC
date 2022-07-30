@@ -91,14 +91,21 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: ${sessionScope.user.getTheme()}">
+
+${sessionScope.user.getUsername()}
 <a href="${pageContext.request.contextPath}/home" class="home">Home</a>
 <form method="post">
     <input type="submit" class="log-out" value="LogOut" name="logout">
     <input type="submit" class="log-out" value="AddPost" name="addpost">
-    <input type="submit" class="log-out" value="Light" name="light">
-    <input type="submit" class="log-out" value="Dark" name="dark">
-    <c:forEach var="post" items="${user.posts}">
+    <c:if test="${sessionScope.user.getTheme() eq 'white'}">
+        <input type="submit" class="log-out" value="Dark" name="dark">
+    </c:if>
+    <c:if test="${sessionScope.user.getTheme() eq 'darkslategray'}">
+        <input type="submit" class="log-out" value="Light" name="light">
+    </c:if>
+
+    <c:forEach var="post" items="${sessionScope.user.getPosts()}">
         <div class="post">
             <img alt="image" src="${post.imageUrl}"/>
             <h3>${post.title}</h3>

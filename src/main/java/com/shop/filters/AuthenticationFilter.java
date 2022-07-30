@@ -1,5 +1,6 @@
 package com.shop.filters;
 
+import com.shop.models.User;
 import com.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class AuthenticationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         //TODO logic???
-//        userService.userAuthentication();
+        userService.userAuthentication(new User());
         chain.doFilter(request, response);
     }
 

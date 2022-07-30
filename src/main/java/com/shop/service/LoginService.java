@@ -11,18 +11,14 @@ import java.util.Map;
 @Service
 public class LoginService {
 
-    //TODO make "user" global attribute
-    public RedirectView login(Map<String, String> requestParams, RedirectAttributes redirectAttributes) {
-        User user;
-        RedirectView redirectView;
+    public User login(Map<String, String> requestParams, RedirectAttributes redirectAttributes) {
+        User user = null;
         try {
             user = paramsValidation(requestParams);
-            redirectView = new RedirectView("home");
         } catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("msg", e.getMessage());
-            redirectView = new RedirectView("login");
+            redirectAttributes.addAttribute("msg", e.getMessage());
         }
-        return redirectView;
+        return user;
     }
 
     private User paramsValidation(Map<String, String> requestParams) {

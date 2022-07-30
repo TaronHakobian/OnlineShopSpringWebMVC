@@ -2,6 +2,7 @@ package com.shop.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class User {
@@ -13,11 +14,13 @@ public class User {
     private List<Post> posts;
     private Theme theme = Theme.Light;
 
-    enum Theme {
+
+    public static enum Theme {
         Dark, Light
     }
 
-    public User() {}
+    public User() {
+    }
 
     public User(String firstname, String lastname, String username, String email, String password) {
         this.firstname = firstname;
@@ -32,6 +35,18 @@ public class User {
         this.username = username;
         this.password = password;
         this.posts = new ArrayList<>();
+    }
+
+    public String getTheme() {
+        if (theme == Theme.Light) {
+            return "white";
+        } else {
+            return "darkslategray";
+        }
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
     }
 
     public String getFirstname() {
@@ -78,7 +93,7 @@ public class User {
         return posts;
     }
 
-    public void setPosts (List<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 
