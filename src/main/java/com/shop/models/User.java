@@ -1,17 +1,24 @@
 package com.shop.models;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+@Component("user")
 public class User {
+    private static int incremented = 1;
+    private Integer userId = incremented++;
     private String firstname;
     private String lastname;
     private String username;
     private String email;
     private String password;
     private List<Post> posts;
+    private List<Post> favoritePosts;
+    private List<User> favoriteUsers;
     private Theme theme = Theme.Light;
 
 
@@ -20,6 +27,7 @@ public class User {
     }
 
     public User() {
+        this.userId = -1;
     }
 
     public User(String firstname, String lastname, String username, String email, String password) {
@@ -29,12 +37,16 @@ public class User {
         this.email = email;
         this.password = password;
         this.posts = new ArrayList<>();
+        this.favoritePosts= new ArrayList<>();
+        this.favoriteUsers = new ArrayList<>();
     }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.posts = new ArrayList<>();
+        this.favoritePosts = new ArrayList<>();
+        this.favoriteUsers = new ArrayList<>();
     }
 
     public String getTheme() {
@@ -43,6 +55,14 @@ public class User {
         } else {
             return "darkslategray";
         }
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getUserId() {
+        return userId;
     }
 
     public void setTheme(Theme theme) {
@@ -95,6 +115,22 @@ public class User {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public List<Post> getFavoritePosts() {
+        return favoritePosts;
+    }
+
+    public void setFavoritePosts(List<Post> favoritePosts) {
+        this.favoritePosts = favoritePosts;
+    }
+
+    public List<User> getFavoriteUsers() {
+        return favoriteUsers;
+    }
+
+    public void setFavoriteUsers(List<User> favoriteUsers) {
+        this.favoriteUsers = favoriteUsers;
     }
 
     @Override

@@ -55,26 +55,42 @@
     </style>
 </head>
 <body style="background-color: ${sessionScope.user.getTheme()}">
-<form method="get" action="/searchByUsername">
-    <label>
-        SearchByUsername <input type="text" name="searchByUsername"/><br>
-        <input type="submit" value="search"/>
-    </label>
+<form method="get" action="${pageContext.request.contextPath}/search">
+    <input type="text" name="searchContent">
+    <input type="submit" value="Search"><br>
 </form>
+<br>
+
+<form action="${pageContext.request.contextPath}/category">
+    <input type="submit" name="Category" value="Jobs">
+    <input type="submit" name="Category" value="Vehicle">
+    <input type="submit" name="Category" value="Accessories">
+    <input type="submit" name="Category" value="Cloths">
+</form>
+<br><br>
+----------------------------------------------------------------
 <c:choose>
-    <c:when test="${user != null}">
-        <a href="${pageContext.request.contextPath}/userprofile" class="user-name">${user.username}</a>
+    <c:when test="${sessionScope.user!=null}">
+        <a href="${pageContext.request.contextPath}/userprofile" class="user-name">${sessionScope.user.username}</a><br>
     </c:when>
     <c:otherwise>
         <a href="${pageContext.request.contextPath}/login" class="log-in">Log in</a>
-        <a href="${pageContext.request.contextPath}/signup" class="sign-up">Sign up</a>
+        <a href="${pageContext.request.contextPath}/signup" class="sign-up">Sign up</a><br><br>
     </c:otherwise>
 </c:choose>
+
+
 <c:forEach var="post" items="${DB.posts}">
-    <div class="post">
-        <img alt="image" src="${post.imageUrl}"/>
+    <form action="${pageContext.request.contextPath}/post">
+        <input type="hidden" name="postId" value="${post.postId}">
+        <input type="hidden" name="authorId" value="${post.authorId}">
         <h3>${post.title}</h3>
-    </div>
+        <img alt="image" src="${post.imageUrl}"/>
+        <input type="submit" value="view">
+    </form>
+    <br>
+    -------------------------------------------------------------------
 </c:forEach>
+
 </body>
 </html>

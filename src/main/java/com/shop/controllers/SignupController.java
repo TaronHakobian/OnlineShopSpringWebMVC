@@ -28,7 +28,6 @@ public class SignupController {
         return new ModelAndView("signup");
     }
 
-    //TODO attributes dont show themselves
     @RequestMapping(method = RequestMethod.POST)
     public RedirectView redirectAfterPost(@RequestParam Map<String, String> requestParams, RedirectAttributes redirectAttributes) {
         return signupService.signup(requestParams, redirectAttributes);

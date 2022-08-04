@@ -89,24 +89,54 @@
             color: #f90;
             text-decoration: underline;
         }
+
+        h4{
+            margin-left: 500px;
+        }
+
+        .favorite{
+            margin-left: 500px;
+        }
     </style>
 </head>
-<body>
+<body style="background-color: ${sessionScope.user.getTheme()}">
+
+${sessionScope.user.getUsername()}
 <a href="${pageContext.request.contextPath}/home" class="home">Home</a>
 <form method="post">
     <input type="submit" class="log-out" value="LogOut" name="logout">
     <input type="submit" class="log-out" value="AddPost" name="addpost">
-    <input type="submit" class="log-out" value="Light" name="light">
-    <input type="submit" class="log-out" value="Dark" name="dark">
-    <c:forEach var="post" items="${user.posts}">
-        <div class="post">
-            <img alt="image" src="${post.imageUrl}"/>
-            <h3>${post.title}</h3>
-            <input type="hidden" value="${post.title}%##%${post.imageUrl}" name="postForAction">
-            <input type="submit" class="edit" value="edit" name="edit">
-            <input type="submit" class="delete" value="x" name="delete">
-        </div>
-    </c:forEach>
+    <c:if test="${sessionScope.user.getTheme() eq 'white'}">
+        <input type="submit" class="log-out" value="Dark" name="dark">
+    </c:if>
+    <c:if test="${sessionScope.user.getTheme() eq 'darkslategray'}">
+        <input type="submit" class="log-out" value="Light" name="light">
+    </c:if>
 </form>
+<br>
+<h4>Favorites</h4>
+<form action="${pageContext.request.contextPath}/saved" class="favorite">
+    <input type="submit" name="favorite" value="Posts">
+    <input type="submit" name="favorite" value="Users">
+</form>
+
+
+
+
+
+<c:forEach var="post" items="${sessionScope.user.getPosts()}">
+    <img alt="image" src="${post.imageUrl}"/>
+    <h3>${post.title}</h3>
+    <br>
+    <form action="${pageContext.request.contextPath}/deletePost" method="post">
+        <input type="hidden" name="postId" value="${post.getPostId()}">
+        <input type="submit" value="x" name="delete">
+    </form>
+    <form action="${pageContext.request.contextPath}/modifyPost" method="post">
+        <input type="hidden" name="postId" value="${post.getPostId()}">
+        <input type="submit"  value="modify" name="modify">
+    </form>
+    ---------------------------------------------------------------------------
+</c:forEach>
 </body>
 </html>
