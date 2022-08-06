@@ -80,7 +80,7 @@
 </c:choose>
 
 
-<c:forEach var="post" items="${DB.posts}">
+<c:forEach var="post" items="${posts}">
     <form action="${pageContext.request.contextPath}/post">
         <input type="hidden" name="postId" value="${post.postId}">
         <input type="hidden" name="authorId" value="${post.authorId}">

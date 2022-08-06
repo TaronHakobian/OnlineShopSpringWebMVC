@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Component("filter")
@@ -24,7 +25,8 @@ public class AuthenticationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         //TODO logic???
-//        userService.userAuthentication(new User());
+        String url = ((HttpServletRequest) request).getRequestURL().toString();
+        System.out.println(url);
         chain.doFilter(request, response);
     }
 

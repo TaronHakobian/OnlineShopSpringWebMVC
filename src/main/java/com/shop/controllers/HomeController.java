@@ -1,5 +1,6 @@
 package com.shop.controllers;
 
+import com.shop.database.DB;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,8 +15,10 @@ public class HomeController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView getHome(HttpSession session) {
-        return new ModelAndView("home");
+    public ModelAndView getHome() {
+        ModelAndView modelAndView = new ModelAndView("home");
+        modelAndView.addObject("posts", DB.posts);
+        return modelAndView;
     }
 
 }
