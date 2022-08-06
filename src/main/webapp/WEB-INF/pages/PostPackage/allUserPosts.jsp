@@ -11,10 +11,22 @@ Author:
 ${author.firstname} ${author.lastname}
 <br>
 Mail: ${author.email}<br>
-<form action="${pageContext.request.contextPath}/userprofile/saveUser" method="post">
-    <input type="hidden" name="userId" value="${author.userId}">
-    <input type="submit" value="Save">
-</form>
+
+<c:choose>
+    <c:when test="${!sessionScope.user.getFavoriteUsers().contains(author)}">
+        <form action="${pageContext.request.contextPath}/saveUser" method="post">
+            <input type="hidden" name="userId" value="${author.userId}">
+            <input type="submit" value="SaveUser">
+        </form>
+    </c:when>
+    <c:otherwise>
+        <form action="${pageContext.request.contextPath}/unSaveUser" method="post">
+            <input type="hidden" name="userId" value="${author.userId}">
+            <input type="submit" value="unSaveUser">
+        </form>
+    </c:otherwise>
+</c:choose>
+
 <br>
 --------------------------------------------------------------
 <br>

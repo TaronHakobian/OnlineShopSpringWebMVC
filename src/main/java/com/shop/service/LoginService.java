@@ -11,17 +11,7 @@ import java.util.Map;
 @Service
 public class LoginService {
 
-    public User login(Map<String, String> requestParams, RedirectAttributes redirectAttributes) {
-        User user = null;
-        try {
-            user = paramsValidation(requestParams);
-        } catch (IllegalArgumentException e) {
-            redirectAttributes.addAttribute("msg", e.getMessage());
-        }
-        return user;
-    }
-
-    private User paramsValidation(Map<String, String> requestParams) {
+    public User login(Map<String, String> requestParams) {
         String username = requestParams.get("username");
         String password = requestParams.get("password");
         User user;

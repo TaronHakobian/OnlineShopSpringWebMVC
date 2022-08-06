@@ -24,7 +24,7 @@ public class AuthenticationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         //TODO logic???
-        userService.userAuthentication(new User());
+//        userService.userAuthentication(new User());
         chain.doFilter(request, response);
     }
 

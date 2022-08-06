@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -89,7 +88,7 @@ public class PostController {
 
     @GetMapping("/posts")
     public ModelAndView getPostsByUser(@RequestParam Map<String, String> params, HttpSession session) {
-        Integer userId = Integer.valueOf(params.get("userId"));
+        int userId = Integer.parseInt(params.get("userId"));
         User user = (User) session.getAttribute("user");
         Integer sessionUserId = user.getUserId();
         if (userId == sessionUserId) {
@@ -102,5 +101,42 @@ public class PostController {
         }
     }
 
+    @PostMapping("/unSavePost")
+    public RedirectView unSavePost(@RequestParam Map<String, String> params, HttpSession session,
+                                   RedirectAttributes redirectAttributes) {
+        User user = (User) session.getAttribute("user");
+        user.getFavoritePosts().remove(DB.getPostById(Integer.valueOf(params.get("postId"))));
+        redirectAttributes.addAllAttributes(params);
+        return new RedirectView("/post");
+    }
+
+
+    @PostMapping("savePost")
+    public RedirectView savePost(@RequestParam Map<String, String> params, HttpSession session,
+                                 RedirectAttributes redirectAttributes) {
+        User user = (User) session.getAttribute("user");
+        user.getFavoritePosts().add(DB.getPostById(Integer.valueOf(params.get("postId"))));
+        redirectAttributes.addAllAttributes(params);
+        return new RedirectView("/post");
+    }
+
+
+    @PostMapping("saveUser")
+    public RedirectView saveUser(@RequestParam Map<String, String> params, HttpSession session,
+                                 RedirectAttributes redirectAttributes) {
+        User user = (User) session.getAttribute("user");
+        user.getFavoriteUsers().add(DB.getUserById(Integer.valueOf(params.get("userId"))));
+        redirectAttributes.addAllAttributes(params);
+        return new RedirectView("/posts");
+    }
+
+    @PostMapping("unSaveUser")
+    public RedirectView unSaveUser(@RequestParam Map<String, String> params, HttpSession session,
+                                 RedirectAttributes redirectAttributes) {
+        User user = (User) session.getAttribute("user");
+        user.getFavoriteUsers().remove(DB.getUserById(Integer.valueOf(params.get("userId"))));
+        redirectAttributes.addAllAttributes(params);
+        return new RedirectView("/posts");
+    }
 
 }

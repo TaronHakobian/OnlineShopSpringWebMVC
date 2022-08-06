@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
 @Service
 public class SignupService {
 
+    //TODO
+
     public RedirectView signup(Map<String, String> requestParams, RedirectAttributes redirectAttributes) {
         RedirectView redirectView;
         try {
@@ -26,8 +28,7 @@ public class SignupService {
         return redirectView;
     }
 
-    private User paramsValidation(Map<String, String> requestParams) {
-        Map<String, String> params = requestParams;
+    private User paramsValidation(Map<String, String> params) {
         String firstname = params.get("firstname");
         String lastname = params.get("lastname");
         String username = params.get("username");

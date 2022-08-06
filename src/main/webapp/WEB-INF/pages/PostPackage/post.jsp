@@ -26,10 +26,23 @@ Mail: ${author.email}
 <br>
 <c:out value="${post.comment}"/>
 <br>
-<form action="${pageContext.request.contextPath}/userprofile/savePost" method="post">
-    <input type="hidden" name="postId" value="${post.postId}">
-    <input type="submit" value="Save">
-</form>
+
+<c:choose>
+    <c:when test="${sessionScope.user.getFavoritePosts().contains(post)}">
+        <form action="${pageContext.request.contextPath}/unSavePost" method="post">
+            <input type="hidden" name="postId" value="${post.postId}">
+            <input type="hidden" name="authorId" value="${author.userId}">
+            <input type="submit" value="UnSave">
+        </form>
+    </c:when>
+    <c:otherwise>
+        <form action="${pageContext.request.contextPath}/savePost" method="post">
+            <input type="hidden" name="postId" value="${post.postId}">
+            <input type="hidden" name="authorId" value="${author.userId}">
+            <input type="submit" value="Save">
+        </form>
+    </c:otherwise>
+</c:choose>
 
 </body>
 </html>

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -49,19 +50,5 @@ public class UserProfileController {
         return null;
     }
 
-    @PostMapping("savePost")
-    public RedirectView savePost(@RequestParam("postId") Integer postId, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        user.getFavoritePosts().add(DB.getPostById(postId));
-        return new RedirectView("/userprofile");
-    }
-
-
-    @PostMapping("saveUser")
-    public RedirectView saveUser(@RequestParam("userId") Integer userId, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        user.getFavoriteUsers().add(DB.getUserById(userId));
-        return new RedirectView("/userprofile");
-    }
 
 }

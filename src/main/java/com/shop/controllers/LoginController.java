@@ -20,12 +20,10 @@ import java.util.Map;
 public class LoginController {
 
     private final LoginService loginService;
-    private final ApplicationContext applicationContext;
 
     @Autowired
-    public LoginController(LoginService loginService, ApplicationContext applicationContext) {
+    public LoginController(LoginService loginService) {
         this.loginService = loginService;
-        this.applicationContext = applicationContext;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -37,14 +35,16 @@ public class LoginController {
     public RedirectView redirectAfterPost(@RequestParam Map<String, String> requestParams,
                                           HttpSession session,
                                           RedirectAttributes redirectAttributes) {
-        User user = loginService.login(requestParams, redirectAttributes);
-        if (user == null) {
+        try {
+            User user = loginService.login(requestParams);
+            session.setAttribute("user", user);
+            return new RedirectView("home");
+        } catch (IllegalArgumentException e) {
             RedirectView view = new RedirectView("login");
+            redirectAttributes.addAttribute("msg", e.getMessage());
             view.setAttributesMap(redirectAttributes.asMap());
             return view;
         }
-        session.setAttribute("user", user);
-        return new RedirectView("home");
     }
 }
 

@@ -26,8 +26,8 @@ public class User {
         Dark, Light
     }
 
-    public User() {
-        this.userId = -1;
+    public User(){
+
     }
 
     public User(String firstname, String lastname, String username, String email, String password) {
